@@ -7,7 +7,7 @@ def get_unique_job_types(path):
 
     for job in read(path):
         unique_jobs.add(job["job_type"])
-        return unique_jobs
+    return unique_jobs
 
 # https://www.javatpoint.com/python-set-function
 # https://www.w3schools.com/python/ref_set_add.asp
@@ -29,7 +29,7 @@ def get_unique_industries(path):
     for job in read(path):
         if job["industry"] != "":
             unique_industries.add(job["industry"])
-        return unique_industries
+    return unique_industries
 
 
 def filter_by_industry(jobs, industry):
