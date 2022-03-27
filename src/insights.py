@@ -55,29 +55,41 @@ def get_min_salary(path):
 
 
 def matches_salary_range(job, salary):
-    """Checks if a given salary is in the salary range of a given job
+    salary_exists = "min_salary" in job and "max_salary" in job
 
-    Parameters
-    ----------
-    job : dict
-        The job with `min_salary` and `max_salary` keys
-    salary : int
-        The salary to check if matches with salary range of the job
+    salary_number = (
+        salary_exists
+        and isinstance(job["min_salary"], int)
+        and isinstance(job["max_salary"], int)
+    )
 
-    Returns
-    -------
-    bool
-        True if the salary is in the salary range of the job, False otherwise
+    salary_is_number = isinstance(salary, int)
 
-    Raises
-    ------
-    ValueError
-        If `job["min_salary"]` or `job["max_salary"]` doesn't exists
-        If `job["min_salary"]` or `job["max_salary"]` aren't valid integers
-        If `job["min_salary"]` is greather than `job["max_salary"]`
-        If `salary` isn't a valid integer
-    """
-    pass
+    minimum_wage_above_maximum = (
+        salary_number
+        and job["min_salary"] > job["max_salary"]
+    )
+
+    salary_range = (
+        salary_number
+        and salary_is_number
+        and job["min_salary"] <= salary <= job["max_salary"]
+    )
+
+    if salary_range:
+        return True
+    elif (
+        not salary_exists
+        or not salary_number
+        or not salary_is_number
+        or minimum_wage_above_maximum
+    ):
+        raise ValueError("The values of your inputs must be of type integer.")
+    else:
+        return False
+
+# https://www.w3schools.com/python/ref_func_isinstance.asp
+# https://stackoverflow.com/questions/2052390/manually-raising-throwing-an-exception-in-python
 
 
 def filter_by_salary_range(jobs, salary):
